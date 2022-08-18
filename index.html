@@ -101,23 +101,24 @@
                 "user_scripts/base64.js"
             ];
             var binarysrc = URL_PARAMS.get("src");
-            var loadedcount = 0;
+            function load_next_script(n){
+                var s = document.createElement("script");
+                s.src = scripts[n];
+                s.onload = function(){
+                    if (n < scripts.length-1){
+                        load_next_script(n+1);
+                    } else {
+                        console.log("All scripts loaded");
+                        windowOnLoad();
+                    }
+                }
+                document.body.appendChild(s);
+            }
             function load_main(){
                 document.body.onclick = null;
                 document.querySelector("#tempMessage").innerText = "Loading scripts...";
                 document.querySelector("#emulator_target").style.display = "block";
-                for (var url of scripts){
-                    var s = document.createElement("script");
-                    s.src = url;
-                    s.onload = function(){
-                        loadedcount++;
-                        if (loadedcount == scripts.length){
-                            console.log("All scripts loaded");
-                            windowOnLoad();
-                        }
-                    }
-                    document.body.appendChild(s);
-                }
+                load_next_script(0);
             }
             document.body.onclick = load_main;
             if (URL_PARAMS.get("noconf") != null) load_main();
