@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>GBA GameCenter</title>
+        <meta charset="UTF-8">
+        <style>
+            html, body {
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                background: black;
+            }
+            canvas {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: none;
+                aspect-ratio: 3/2;
+                width: 100%;
+            }
+            span {
+                color: red;
+                bottom: 0px;
+                position: absolute;
+                right: 0px;
+                display: none;
+                font-size: 40pt;
+                font-weight: bold;
+                text-align: right;
+                font-family: monospace;
+                display: block;
+            }
+            @media (min-aspect-ratio: 3/2) {
+                canvas {
+                    height: 100%;
+                    width: initial;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="emulator_target" width="240px" height="160px"></canvas>
+        <span id="tempMessage">Click to start game.</span>
+        <script>
+            const URL_PARAMS = new URLSearchParams(window.location.search);
+            const scripts = [
+                "IodineGBA/includes/TypedArrayShim.js",
+                "IodineGBA/core/Cartridge.js",
+                "IodineGBA/core/DMA.js",
+                "IodineGBA/core/Emulator.js",
+                "IodineGBA/core/Graphics.js",
+                "IodineGBA/core/RunLoop.js",
+                "IodineGBA/core/Memory.js",
+                "IodineGBA/core/IRQ.js",
+                "IodineGBA/core/JoyPad.js",
+                "IodineGBA/core/Serial.js",
+                "IodineGBA/core/Sound.js",
+                "IodineGBA/core/Timer.js",
+                "IodineGBA/core/Wait.js",
+                "IodineGBA/core/CPU.js",
+                "IodineGBA/core/Saves.js",
+                "IodineGBA/core/sound/FIFO.js",
+                "IodineGBA/core/sound/Channel1.js",
+                "IodineGBA/core/sound/Channel2.js",
+                "IodineGBA/core/sound/Channel3.js",
+                "IodineGBA/core/sound/Channel4.js",
+                "IodineGBA/core/CPU/ARM.js",
+                "IodineGBA/core/CPU/THUMB.js",
+                "IodineGBA/core/CPU/CPSR.js",
+                "IodineGBA/core/graphics/Renderer.js",
+                "IodineGBA/core/graphics/RendererProxy.js",
+                "IodineGBA/core/graphics/BGTEXT.js",
+                "IodineGBA/core/graphics/BG2FrameBuffer.js",
+                "IodineGBA/core/graphics/BGMatrix.js",
+                "IodineGBA/core/graphics/AffineBG.js",
+                "IodineGBA/core/graphics/ColorEffects.js",
+                "IodineGBA/core/graphics/Mosaic.js",
+                "IodineGBA/core/graphics/OBJ.js",
+                "IodineGBA/core/graphics/OBJWindow.js",
+                "IodineGBA/core/graphics/Window.js",
+                "IodineGBA/core/graphics/Compositor.js",
+                "IodineGBA/core/memory/DMA0.js",
+                "IodineGBA/core/memory/DMA1.js",
+                "IodineGBA/core/memory/DMA2.js",
+                "IodineGBA/core/memory/DMA3.js",
+                "IodineGBA/core/cartridge/SaveDeterminer.js",
+                "IodineGBA/core/cartridge/SRAM.js",
+                "IodineGBA/core/cartridge/FLASH.js",
+                "IodineGBA/core/cartridge/EEPROM.js",
+                "user_scripts/XAudioJS/swfobject.js",
+                "user_scripts/XAudioJS/resampler.js",
+                "user_scripts/XAudioJS/XAudioServer.js",
+                "user_scripts/IodineGBAROMLoadGlueCode.js",
+                "user_scripts/IodineGBAJoyPadGlueCode.js",
+                "user_scripts/IodineGBASavesGlueCode.js",
+                "user_scripts/IodineGBAGraphicsGlueCode.js",
+                "user_scripts/IodineGBAAudioGlueCode.js",
+                "user_scripts/IodineGBACoreGlueCode.js",
+                "user_scripts/base64.js"
+            ];
+            var binarysrc = URL_PARAMS.get("src");
+            var loadedcount = 0;
+            function load_main(){
+                document.body.onclick = null;
+                document.querySelector("#tempMessage").innerText = "Loading scripts...";
+                document.querySelector("#emulator_target").style.display = "block";
+                for (var url of scripts){
+                    var s = document.createElement("script");
+                    s.src = url;
+                    s.onload = function(){
+                        loadedcount++;
+                        if (loadedcount == scripts.length){
+                            console.log("All scripts loaded");
+                            windowOnLoad();
+                        }
+                    }
+                    document.body.appendChild(s);
+                }
+            }
+            document.body.onclick = load_main;
+            if (URL_PARAMS.get("noconf") != null) load_main();
+        </script>
+    </body>
+</html>
