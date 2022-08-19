@@ -102,13 +102,13 @@
             ];
             var binarysrc = URL_PARAMS.get("src");
             function load_next_script(n){
+                document.querySelector("#tempMessage").innerText = "Loading scripts ("+n+"/"+scripts.length+")";
                 var s = document.createElement("script");
                 s.src = scripts[n];
                 s.onload = function(){
-                    if (n < scripts.length-1){
-                        load_next_script(n+1);
-                    } else {
-                        console.log("All scripts loaded");
+                    if (n < scripts.length-1) load_next_script(n+1);
+                    else {
+                        document.querySelector("#tempMessage").innerText = "Loaded all scripts.";
                         windowOnLoad();
                     }
                 }
@@ -116,7 +116,6 @@
             }
             function load_main(){
                 document.body.onclick = null;
-                document.querySelector("#tempMessage").innerText = "Loading scripts...";
                 document.querySelector("#emulator_target").style.display = "block";
                 load_next_script(0);
             }
