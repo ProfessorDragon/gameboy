@@ -9,3 +9,5 @@ Modified version of IodineGBA
 - B - Z/L
 - L - Q/I
 - R - E/O
+- Change volume - +/-
+- Change speed - [/]
