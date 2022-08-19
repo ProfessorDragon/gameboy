@@ -29,7 +29,7 @@ var keyZones = [
                 //R:
                 [69, 79],
                 //L:
-                [81, 76]
+                [81, 73]
 ];
 function keyDown(e) {
     var keyCode = e.keyCode | 0;
@@ -61,16 +61,16 @@ function keyUp(keyCode) {
 function keyUpPreprocess(e) {
     var keyCode = e.keyCode | 0;
     switch (keyCode | 0) {
-        case 68:
+        case 187:
             lowerVolume();
             break;
-        case 82:
+        case 189:
             raiseVolume();
             break;
-        case 51:
+        case 221:
             Iodine.incrementSpeed(0.10);
             break;
-        case 52:
+        case 219:
             Iodine.incrementSpeed(-0.10);
             break;
         default:
