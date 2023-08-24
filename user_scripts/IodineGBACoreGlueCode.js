@@ -175,12 +175,6 @@ function registerGUIEvents() {
         document.title = games[URL_PARAMS.get("name")] + " - " + speed;
     });
 }
-function lowerVolume() {
-    Iodine.incrementVolume(-0.04);
-}
-function raiseVolume() {
-    Iodine.incrementVolume(0.04);
-}
 function writeRedTemporaryText(textString) {
     if (timerID) {
         clearTimeout(timerID);

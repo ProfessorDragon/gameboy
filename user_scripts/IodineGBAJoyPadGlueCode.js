@@ -61,17 +61,23 @@ function keyUp(keyCode) {
 function keyUpPreprocess(e) {
     var keyCode = e.keyCode | 0;
     switch (keyCode | 0) {
-        case 187:
-            lowerVolume();
+        case 189: // Minus
+            Iodine.incrementVolume(-0.05);
             break;
-        case 189:
-            raiseVolume();
+        case 187: // Equal
+            Iodine.incrementVolume(0.05);
             break;
-        case 221:
+        case 48: // Digit0
+            Iodine.changeVolume(1);
+            break;
+        case 219: // BracketLeft
+            Iodine.incrementSpeed(-0.10);
+            break;
+        case 221: // BracketRight
             Iodine.incrementSpeed(0.10);
             break;
-        case 219:
-            Iodine.incrementSpeed(-0.10);
+        case 220: // Backslash
+            Iodine.setSpeed(1);
             break;
         default:
             //Control keys / other
