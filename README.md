@@ -6,7 +6,7 @@ Modified version of [IodineGBA](https://github.com/taisel/IodineGBA).
 - Start - Enter
 - Select - Shift
 - D Pad - Arrows/WASD
-- A - `X`/`K`
+- A - `X`/`K`/Space
 - B - `Z`/`L`
 - L - `Q`/`I`
 - R - `E`/`O`
